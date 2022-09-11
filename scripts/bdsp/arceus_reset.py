@@ -16,7 +16,13 @@ from email.message import EmailMessage
 
 from dotenv import load_dotenv
 import os
- 
+
+# using the script 
+# cd .\OneDrive\Documents\GitHub\switch-microcontroller\scripts\bdsp\
+# open switch-microcontroller root
+# cd .\scripts\bdsp\
+# python3 .\arceus_reset.py
+
 # Use load_env to trace the path of .env
 load_dotenv('../../.env') 
 
@@ -151,7 +157,7 @@ def main() -> int:
     vid = cv2.VideoCapture(0)
     vid.set(cv2.CAP_PROP_FRAME_WIDTH, 768)
     vid.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
-    i = 0 # running number for the count of resets
+    i = 17114 # running number for the count of resets
 
     with serial.Serial(args.serial, 9600) as ser, _shh(ser):
         while True:
