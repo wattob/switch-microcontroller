@@ -21,7 +21,7 @@ import os
 # cd .\OneDrive\Documents\GitHub\switch-microcontroller\scripts\bdsp\
 # open switch-microcontroller root
 # cd .\scripts\bdsp\
-# python3 .\ramanas_reset.py
+# python3 .\dialga_reset.py
 
 # Use load_env to trace the path of .env
 load_dotenv('../../.env') 
@@ -36,11 +36,9 @@ def sendEmail(count):
     email_password = os.environ.get("email_password")
     email_receiver = os.environ.get("email_receiver")
 
-    name = 'Rayquaza'
-
     # Set the subject and body of the email
     subject = 'Check out the shiny encounter!'
-    body = f"""Currently shiny hunting {name}! Finally encountered a shiny at {count} resets!"""
+    body = f"""Currently shiny hunting Dialga! Finally encountered a shiny at {count} resets!"""
 
     em = EmailMessage()
     em['From'] = email_sender
@@ -159,7 +157,7 @@ def main() -> int:
     vid = cv2.VideoCapture(0)
     vid.set(cv2.CAP_PROP_FRAME_WIDTH, 768)
     vid.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
-    i = 7720 # running number for the count of resets
+    i = 3091 # running number for the count of resets
 
     with serial.Serial(args.serial, 9600) as ser, _shh(ser):
         while True:
@@ -183,12 +181,22 @@ def main() -> int:
 
             print('game loaded!')
 
-            _press(ser, 'w', duration=.7)
-            _press(ser, 'A')
-            _wait_and_render(vid, .5)
+            _press(ser, 'w', duration=.5)
+
+            frame = _getframe(vid)
+            while not (
+                    _color_near(frame[900][900], (254, 254, 254)) 
+                    # and
+                    # _color_near(frame[44][236], (157, 29, 20)) # frame[y][x], (...)
+            ):
+                _wait_and_render(vid, .1)
+                frame = _getframe(vid)
+                    
+            _wait_and_render(vid, 1)
             _press(ser, 'A')
 
             print('started battle!')
+            _press(ser, 'A')
             _wait_and_render(vid, 1)
 
             _await_pixel(ser, vid, x=900, y=900, pixel=(254, 254, 254))

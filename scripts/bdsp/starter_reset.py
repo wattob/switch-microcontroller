@@ -158,7 +158,7 @@ def main() -> int:
     vid = cv2.VideoCapture(0)
     vid.set(cv2.CAP_PROP_FRAME_WIDTH, 768)
     vid.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
-    i = 2039
+    i = 154
      # running number for the count of resets
     # Variable for starter CHOICE!
     starterChoice = os.environ.get("starter_choice")
@@ -220,6 +220,8 @@ def main() -> int:
                 # _press(ser, 'A')
 
             if (starterChoice == 'chimchar'):
+                _wait_and_render(vid, 1.0)
+                _press(ser, 'A')
                 _wait_and_render(vid, 1)
                 _press(ser, 'd') 
                 _wait_and_render(vid, 1)

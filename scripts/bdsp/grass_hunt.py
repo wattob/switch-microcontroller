@@ -21,7 +21,7 @@ import os
 # cd .\OneDrive\Documents\GitHub\switch-microcontroller\scripts\bdsp\
 # open switch-microcontroller root
 # cd .\scripts\bdsp\
-# python3 .\ramanas_reset.py
+# python3 .\giratina_reset.py
 
 # Use load_env to trace the path of .env
 load_dotenv('../../.env') 
@@ -36,11 +36,9 @@ def sendEmail(count):
     email_password = os.environ.get("email_password")
     email_receiver = os.environ.get("email_receiver")
 
-    name = 'Rayquaza'
-
     # Set the subject and body of the email
     subject = 'Check out the shiny encounter!'
-    body = f"""Currently shiny hunting {name}! Finally encountered a shiny at {count} resets!"""
+    body = f"""Currently shiny hunting random grass encounters! Finally encountered a shiny at {count} encounters!"""
 
     em = EmailMessage()
     em['From'] = email_sender
@@ -159,12 +157,15 @@ def main() -> int:
     vid = cv2.VideoCapture(0)
     vid.set(cv2.CAP_PROP_FRAME_WIDTH, 768)
     vid.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
-    i = 7720 # running number for the count of resets
+    i = 934 # running number for the count of resets
 
     with serial.Serial(args.serial, 9600) as ser, _shh(ser):
         while True:
             i = i + 1
             print(' total count ', i)
+            # run forward X amount
+            #run backwaard X amount
+            # repeat until what???
             _press(ser, 'H')
             _wait_and_render(vid, 1)
             _press(ser, 'X')
@@ -176,14 +177,14 @@ def main() -> int:
             _press(ser, 'A')
             print('Loading screen!')
             frame = _getframe(vid)
-            while not _color_near(frame[57][659], (248, 248, 248)):
+            while not _color_near(frame[239][642], (58, 78, 63)): # check for some pixel on the ground. May remove as it's another place it could break
                 _wait_and_render(vid, .15)
                 _press(ser, 'A')
                 frame = _getframe(vid)
 
             print('game loaded!')
 
-            _press(ser, 'w', duration=.7)
+            _press(ser, 'w', duration=.5)
             _press(ser, 'A')
             _wait_and_render(vid, .5)
             _press(ser, 'A')

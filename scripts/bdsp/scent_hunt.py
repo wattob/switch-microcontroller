@@ -160,6 +160,7 @@ def main() -> int:
     with serial.Serial(args.serial, 9600) as ser, _shh(ser):
         while True:
             count = count + 1
+            print('count', count)
 
             _wait_and_render(vid, 5)
 
@@ -190,7 +191,7 @@ def main() -> int:
 
             if (t1 - t0) > 1:
                 print('SHINY!!!')
-                sendEmail(i)
+                sendEmail(count)
                 _alarm(ser, vid)
 
             print('Run Away!')
